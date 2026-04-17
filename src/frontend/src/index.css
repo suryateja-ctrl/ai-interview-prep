@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: "Space Grotesk";
+    --font-body: "Satoshi";
+    --font-mono: "JetBrains Mono";
+    --radius: 0.5rem;
+
+    --background: 0.99 0 0;
+    --foreground: 0.15 0 0;
+    --card: 1.0 0 0;
+    --card-foreground: 0.15 0 0;
+    --popover: 1.0 0 0;
+    --popover-foreground: 0.15 0 0;
+
+    --primary: 0.52 0.16 250;
+    --primary-foreground: 0.98 0 0;
+
+    --secondary: 0.95 0 0;
+    --secondary-foreground: 0.25 0 0;
+    --muted: 0.95 0 0;
+    --muted-foreground: 0.5 0 0;
+
+    --accent: 0.72 0.18 185;
+    --accent-foreground: 0.12 0.008 250;
+
+    --destructive: 0.55 0.22 25;
+    --destructive-foreground: 0.98 0 0;
+
+    --border: 0.9 0 0;
+    --input: 0.9 0 0;
+    --ring: 0.72 0.18 185;
+
+    --chart-1: 0.72 0.18 185;
+    --chart-2: 0.65 0.22 310;
+    --chart-3: 0.68 0.16 145;
+    --chart-4: 0.48 0.18 265;
+    --chart-5: 0.75 0.15 55;
+
+    --sidebar: 0.98 0 0;
+    --sidebar-foreground: 0.15 0 0;
+    --sidebar-primary: 0.52 0.16 250;
+    --sidebar-primary-foreground: 0.98 0 0;
+    --sidebar-accent: 0.95 0 0;
+    --sidebar-accent-foreground: 0.25 0 0;
+    --sidebar-border: 0.9 0 0;
+    --sidebar-ring: 0.72 0.18 185;
+  }
+
+  .dark {
+    --background: 0.12 0.008 250;
+    --foreground: 0.94 0.008 250;
+    --card: 0.16 0.01 250;
+    --card-foreground: 0.94 0.008 250;
+    --popover: 0.2 0.012 250;
+    --popover-foreground: 0.94 0.008 250;
+
+    --primary: 0.52 0.16 250;
+    --primary-foreground: 0.12 0.008 250;
+
+    --secondary: 0.22 0.01 250;
+    --secondary-foreground: 0.85 0.008 250;
+    --muted: 0.22 0.01 250;
+    --muted-foreground: 0.56 0.006 250;
+
+    --accent: 0.72 0.18 185;
+    --accent-foreground: 0.12 0.008 250;
+
+    --destructive: 0.62 0.2 25;
+    --destructive-foreground: 0.94 0.008 250;
+
+    --border: 0.26 0.01 250;
+    --input: 0.26 0.01 250;
+    --ring: 0.72 0.18 185;
+
+    --chart-1: 0.72 0.18 185;
+    --chart-2: 0.65 0.22 310;
+    --chart-3: 0.68 0.16 145;
+    --chart-4: 0.48 0.18 265;
+    --chart-5: 0.75 0.15 55;
+
+    --sidebar: 0.14 0.01 250;
+    --sidebar-foreground: 0.94 0.008 250;
+    --sidebar-primary: 0.52 0.16 250;
+    --sidebar-primary-foreground: 0.12 0.008 250;
+    --sidebar-accent: 0.22 0.01 250;
+    --sidebar-accent-foreground: 0.85 0.008 250;
+    --sidebar-border: 0.22 0.01 250;
+    --sidebar-ring: 0.72 0.18 185;
+  }
+
+  @font-face {
+    font-family: "Space Grotesk";
+    src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Satoshi";
+    src: url("/assets/fonts/Satoshi.woff2") format("woff2");
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "JetBrains Mono";
+    src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+    font-display: swap;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-data {
+    @apply bg-card rounded-md border border-border shadow-xs transition-smooth hover:shadow-sm;
+  }
+
+  .stat-label {
+    @apply text-xs font-semibold tracking-widest uppercase text-muted-foreground;
+  }
+
+  .stat-value {
+    @apply text-2xl font-bold font-display text-foreground;
+  }
+
+  .badge-primary {
+    @apply inline-flex items-center px-2 py-1 rounded-sm bg-primary/10 text-primary text-xs font-medium;
+  }
+
+  .badge-accent {
+    @apply inline-flex items-center px-2 py-1 rounded-sm bg-accent/10 text-accent text-xs font-medium;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-md bg-accent text-accent-foreground font-medium text-sm transition-smooth hover:opacity-90 focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-md border border-border bg-background text-foreground font-medium text-sm transition-smooth hover:bg-muted focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+
+  .text-micro {
+    @apply text-xs text-muted-foreground;
+  }
+
+  .nav-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-smooth text-muted-foreground hover:text-foreground hover:bg-muted/60 cursor-pointer;
+  }
+
+  .nav-item-active {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-accent bg-accent/10 border border-accent/20;
+  }
+
+  .section-alt {
+    @apply bg-muted/30;
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 24px oklch(0.72 0.18 185 / 0.18);
+  }
+}

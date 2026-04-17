@@ -1,0 +1,269 @@
+type http_request_result = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type http_header = 
+ record {
+   name: text;
+   value: text;
+ };
+type UserTopicProgress = 
+ record {
+   completed: bool;
+   completedAt: opt Timestamp;
+   topicId: TopicId;
+   userId: UserId;
+ };
+type UserRole__1 = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserRole = 
+ variant {
+   BackendDeveloper;
+   DataAnalyst;
+   DataScientist;
+   DevOps;
+   FrontendDeveloper;
+   FullStack;
+   ProductManager;
+ };
+type UserProfileInput = 
+ record {
+   experienceLevel: ExperienceLevel;
+   name: text;
+   role: UserRole;
+   targetJobTitle: text;
+ };
+type UserProfile = 
+ record {
+   createdAt: Timestamp;
+   experienceLevel: ExperienceLevel;
+   name: text;
+   onboardingComplete: bool;
+   "principal": UserId;
+   role: UserRole;
+   targetJobTitle: text;
+   updatedAt: Timestamp;
+ };
+type UserId = principal;
+type TransformationOutput = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type TransformationInput = 
+ record {
+   context: blob;
+   response: http_request_result;
+ };
+type TopicId = nat;
+type Timestamp = int;
+type Subtopic = 
+ record {
+   description: text;
+   links: vec LearningLink;
+   name: text;
+ };
+type StudyTopic = 
+ record {
+   description: text;
+   id: TopicId;
+   name: text;
+   priority: nat;
+   role: UserRole;
+   subtopics: vec Subtopic;
+ };
+type StudyPlanItem = 
+ record {
+   estimatedHours: nat;
+   priority: nat;
+   skill: text;
+   topicIds: vec TopicId;
+ };
+type SkillGapResult = 
+ record {
+   overallReadiness: nat;
+   studyPlan: vec StudyPlanItem;
+   weakSkills: vec SkillGapEntry;
+ };
+type SkillGapEntry = 
+ record {
+   currentLevel: nat;
+   priority: nat;
+   skill: text;
+   studyResources: vec text;
+   targetLevel: nat;
+ };
+type SessionStartResult = 
+ record {
+   firstQuestion: InterviewQuestion;
+   sessionId: SessionId;
+ };
+type SessionId = nat;
+type ScoringRubric = 
+ record {
+   excellent: text;
+   fair: text;
+   good: text;
+   poor: text;
+ };
+type ScoreTrend = 
+ record {
+   completedAt: Timestamp;
+   score: nat;
+   sessionId: SessionId;
+ };
+type ResumeInput = 
+ record {
+   education: vec EducationEntry;
+   experience: vec ExperienceEntry;
+   skills: vec text;
+   summary: text;
+   targetRole: text;
+ };
+type ResumeGenerationResult = 
+ record {
+   isDemo: bool;
+   keywords: vec text;
+   resume: ResumeData;
+   suggestions: vec text;
+ };
+type ResumeData = 
+ record {
+   education: vec EducationEntry;
+   experience: vec ExperienceEntry;
+   skills: vec text;
+   summary: text;
+   targetRole: text;
+   updatedAt: Timestamp;
+   userId: UserId;
+ };
+type QuestionType = 
+ variant {
+   Behavioral;
+   Technical;
+ };
+type QuestionId = nat;
+type ProgressReport = 
+ record {
+   averageScore: nat;
+   lastUpdated: Timestamp;
+   mockSessionsCompleted: nat;
+   readinessScore: nat;
+   scoreTrends: vec ScoreTrend;
+   skillsAcquired: vec text;
+   topicsCompleted: nat;
+   topicsTotal: nat;
+   userId: UserId;
+ };
+type MockSessionTurn = 
+ record {
+   answeredAt: Timestamp;
+   feedback: text;
+   question: text;
+   questionId: QuestionId;
+   score: nat;
+   userAnswer: text;
+ };
+type MockSession = 
+ record {
+   completedAt: opt Timestamp;
+   currentQuestionIndex: nat;
+   difficulty: Difficulty;
+   id: SessionId;
+   isComplete: bool;
+   questionIds: vec QuestionId;
+   role: UserRole;
+   startedAt: Timestamp;
+   totalScore: nat;
+   turns: vec MockSessionTurn;
+   userId: UserId;
+ };
+type LearningLink = 
+ record {
+   resourceType: text;
+   title: text;
+   url: text;
+ };
+type InterviewQuestion = 
+ record {
+   difficulty: Difficulty;
+   id: QuestionId;
+   idealAnswer: text;
+   question: text;
+   questionType: QuestionType;
+   role: UserRole;
+   rubric: ScoringRubric;
+   tags: vec text;
+ };
+type ExperienceLevel = 
+ variant {
+   Junior;
+   Mid;
+   Senior;
+ };
+type ExperienceEntry = 
+ record {
+   achievements: vec text;
+   company: text;
+   description: text;
+   endDate: opt text;
+   startDate: text;
+   title: text;
+ };
+type EducationEntry = 
+ record {
+   degree: text;
+   endYear: opt nat;
+   field: text;
+   gpa: opt text;
+   institution: text;
+   startYear: nat;
+ };
+type Difficulty = 
+ variant {
+   Easy;
+   Hard;
+   Medium;
+ };
+type AnswerSubmitResult = 
+ record {
+   feedback: text;
+   finalScore: opt nat;
+   nextQuestion: opt InterviewQuestion;
+   score: nat;
+   sessionComplete: bool;
+ };
+service : {
+  _initializeAccessControl: () -> ();
+  assignCallerUserRole: (user: principal, role: UserRole__1) -> ();
+  completeOnboarding: () -> ();
+  generateResume: (input: ResumeInput) -> (ResumeGenerationResult);
+  getCallerUserProfile: () -> (opt UserProfile) query;
+  getCallerUserRole: () -> (UserRole__1) query;
+  getInterviewQuestions: (role: UserRole, difficulty: opt Difficulty) ->
+   (vec InterviewQuestion) query;
+  getMockSession: (sessionId: SessionId) -> (opt MockSession) query;
+  getProgressReport: () -> (ProgressReport) query;
+  getResume: () -> (opt ResumeData) query;
+  getSkillGapAnalysis: () -> (SkillGapResult) query;
+  getStudyTopic: (topicId: TopicId) -> (opt StudyTopic) query;
+  getStudyTopics: (role: UserRole) -> (vec StudyTopic) query;
+  getUserMockSessions: () -> (vec MockSession) query;
+  getUserProfile: (user: principal) -> (opt UserProfile) query;
+  getUserTopicProgress: () -> (vec UserTopicProgress) query;
+  isCallerAdmin: () -> (bool) query;
+  markTopicComplete: (topicId: TopicId) -> ();
+  saveCallerUserProfile: (input: UserProfileInput) -> (UserProfile);
+  saveResume: (input: ResumeInput) -> (ResumeData);
+  startMockSession: (role: UserRole, difficulty: Difficulty) ->
+   (SessionStartResult);
+  submitAnswer: (sessionId: SessionId, answer: text) -> (AnswerSubmitResult);
+  transform: (input: TransformationInput) -> (TransformationOutput) query;
+}

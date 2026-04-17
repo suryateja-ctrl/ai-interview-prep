@@ -1,0 +1,24 @@
+{
+  "overview": "AIPS is an AI-powered interview preparation platform that helps students and professionals land their dream jobs. It provides tools for building ATS-optimized resumes, practicing with role-specific interview questions, simulating mock interviews with AI feedback, exploring curated study topics, identifying skill gaps, and tracking your readiness score over time.",
+  "features": [
+    "Internet Identity authentication with role and target job onboarding",
+    "AI Resume Builder with improvement suggestions and PDF export",
+    "Role-specific Interview Q&A with expand/collapse answers and scoring rubrics",
+    "Text-based Mock Interview simulation with AI evaluation and feedback",
+    "Curated Study Topics by role with progress tracking",
+    "Skill Gap Analysis with prioritized study plan",
+    "Analytics Dashboard with readiness score trends and performance charts",
+    "User profile and settings management"
+  ],
+  "category": "productivity",
+  "tags": [
+    "interview-prep",
+    "ai",
+    "resume-builder",
+    "mock-interview",
+    "career",
+    "education",
+    "analytics"
+  ],
+  "last_updated": "2026-04-17T19:55:50.731Z"
+}
